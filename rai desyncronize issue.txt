@@ -1,0 +1,3 @@
+Use
+sudo hwclock -s
+to synchronize system clock and rai clock.

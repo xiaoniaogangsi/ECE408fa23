@@ -1,0 +1,13 @@
+A possible issue with WSL replacing newline with '\r':
+You may need to run the following commands to convert our script back to Unix style:
+```
+sudo apt-get install dos2unix
+dos2unix run_datasets
+```
+
+Enjoy and have fun!
+
+Sincerely,
+ECE 408 Course Staff
+
+For anyone having E: Unable to locate package dos2unix, use sudo apt-get update then sudo apt install dos2unix
