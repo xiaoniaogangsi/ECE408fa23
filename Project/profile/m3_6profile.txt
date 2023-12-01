@@ -1,0 +1,211 @@
+Nsys:
+**** collection configuration ****
+        force-overwrite = false
+        stop-on-exit = true
+        export_sqlite = true
+        stats = true
+        capture-range = none
+        stop-on-range-end = false
+        Beta: ftrace events:
+        ftrace-keep-user-config = false
+        trace-GPU-context-switch = false
+        delay = 0 seconds
+        duration = 0 seconds
+        kill = signal number 15
+        inherit-environment = true
+        show-output = true
+        trace-fork-before-exec = false
+        sample_cpu = true
+        backtrace_method = LBR
+        wait = all
+        trace_cublas = false
+        trace_cuda = true
+        trace_cudnn = false
+        trace_nvtx = true
+        trace_mpi = false
+        trace_openacc = false
+        trace_vulkan = false
+        trace_opengl = true
+        trace_osrt = true
+        osrt-threshold = 0 nanoseconds
+        cudabacktrace = false
+        cudabacktrace-threshold = 0 nanoseconds
+        profile_processes = tree
+        application command = ./m3
+        application arguments =
+        application working directory = /build
+        NVTX profiler range trigger =
+        NVTX profiler domain trigger =
+        environment variables:
+        Collecting data...
+Running test case 1
+B = 1 M = 3 C = 3 H = 224 W = 224 K = 3 S = 1
+Running test case 2
+B = 2 M = 3 C = 3 H = 301 W = 301 K = 3 S = 2
+Running test case 3
+B = 3 M = 3 C = 3 H = 196 W = 196 K = 3 S = 3
+Running test case 4
+B = 4 M = 3 C = 3 H = 239 W = 239 K = 3 S = 4
+All test cases passed
+Test batch size: 5000
+Loading fashion-mnist data...Done
+Loading model...Done
+Conv-GPU==
+Layer Time: 340.065 ms
+Op Time: 10.276 ms
+Conv-GPU==
+Layer Time: 253.007 ms
+Op Time: 28.1131 ms
+
+Test Accuracy: 0.871
+
+        Generating the /build/report1.qdstrm file.
+        Capturing raw events...
+        334438 total events collected.
+        Capturing symbol files...
+        Saving diagnostics...
+        Saving qdstrm file to disk...
+        Finished saving file.
+
+
+Importing the qdstrm file using /opt/nvidia/nsight-systems/2019.5.2/host-linux-x64/QdstrmImporter.
+
+Importing...
+
+Importing [==================================================100%]
+Saving report to file "/build/report1.qdrep"
+Report file saved.
+Please discard the qdstrm file and use the qdrep file instead.
+
+Removed /build/report1.qdstrm as it was successfully imported.
+Please use the qdrep file instead.
+
+Exporting the qdrep file to SQLite database using /opt/nvidia/nsight-systems/2019.5.2/host-linux-x64/nsys-exporter.
+
+Exporting 334413 events:
+
+0%   10   20   30   40   50   60   70   80   90   100%
+|----|----|----|----|----|----|----|----|----|----|
+***************************************************
+
+Exported successfully to
+/build/report1.sqlite
+
+Generating CUDA API Statistics...
+CUDA API Statistics (nanoseconds)
+
+Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   70.7       555116411          20      27755820.6           30724       303961579  cudaMemcpy
+   24.1       188880107          20       9444005.3            2320       185706365  cudaMalloc
+    4.9        38398438          16       2399902.4             850        28081022  cudaDeviceSynchronize
+    0.3         2565965          20        128298.2            2386          672018  cudaFree
+    0.0          389723          10         38972.3           24681          126847  cudaLaunchKernel
+
+
+
+
+Generating CUDA Kernel Statistics...
+
+Generating CUDA Memory Operation Statistics...
+CUDA Kernel Statistics (nanoseconds)
+
+Time(%)      Total Time   Instances         Average         Minimum         Maximum  Name
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+  100.0        38362846           6       6393807.7            6944        28077845  conv_forward_kernel
+    0.0            2752           2          1376.0            1344            1408  do_not_remove_this_kernel
+    0.0            2464           2          1232.0            1216            1248  prefn_marker_kernel
+
+
+CUDA Memory Operation Statistics (nanoseconds)
+
+Time(%)      Total Time  Operations         Average         Minimum         Maximum  Name
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   91.7       505103568           6      84183928.0           23200       303178274  [CUDA memcpy DtoH]
+    8.3        45916034          14       3279716.7            1152        23994712  [CUDA memcpy HtoD]
+
+
+CUDA Memory Operation Statistics (KiB)
+
+            Total      Operations            Average            Minimum            Maximum  Name
+-----------------  --------------  -----------------  -----------------  -----------------  --------------------------------------------------------------------------------
+         862672.0               6           143778.7            148.535           500000.0  [CUDA memcpy DtoH]
+         276206.0              14            19729.0              0.004           144453.0  [CUDA memcpy HtoD]
+
+
+
+
+Generating Operating System Runtime API Statistics...
+Operating System Runtime API Statistics (nanoseconds)
+
+Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   33.3     52229256414         536      97442642.6           17471       100498890  sem_timedwait
+   33.3     52188985702         536      97367510.6           21975       100596292  poll
+   22.0     34508472520          69     500122790.1       500078820       500172018  pthread_cond_timedwait
+   11.3     17660049387           2    8830024693.5      4410409490     13249639897  pthread_cond_wait
+    0.1        87004833         940         92558.3            1004        20413039  ioctl
+    0.0        20178710        9422          2141.7            1002           18825  read
+    0.0         4168944          98         42540.2            1384         2047369  mmap
+    0.0         1118703         101         11076.3            4486           23025  open64
+    0.0          310126           5         62025.2           54176           72293  pthread_create
+    0.0          275331          19         14491.1            3310           43014  fopen64
+    0.0          257880          26          9918.5            1085          194305  fopen
+    0.0          133879           3         44626.3           40911           50108  fgets
+    0.0          100925          15          6728.3            2671           11306  fflush
+    0.0           81479          20          4073.9            1550           14000  munmap
+    0.0           80137          25          3205.5            1020            7806  fclose
+    0.0           66607          15          4440.5            1896            6551  write
+    0.0           31369           5          6273.8            3667            7954  open
+    0.0           12861           2          6430.5            5557            7304  socket
+    0.0            8634           1          8634.0            8634            8634  pipe2
+    0.0            8412           1          8412.0            8412            8412  pthread_mutex_trylock
+    0.0            7594           2          3797.0            3527            4067  pthread_cond_signal
+    0.0            6552           1          6552.0            6552            6552  connect
+    0.0            6281           4          1570.3            1132            2739  fwrite
+    0.0            4859           4          1214.8            1083            1429  fcntl
+    0.0            1910           1          1910.0            1910            1910  bind
+
+
+
+
+Generating NVTX Push-Pop Range Statistics...
+NVTX Push-Pop Range Statistics (nanoseconds)
+✱ The build folder has been uploaded to http://s3.amazonaws.com/files.rai-project.com/userdata/build-656a1a1570224202524203fe.tar.gz. The data will be present for only a short duration of time.
+
+Nv-nsight-cu-cli:
+Running test case 1
+B = 1 M = 3 C = 3 H = 224 W = 224 K = 3 S = 1
+==PROF== Connected to process 557 (/build/m3)
+==PROF== Profiling "conv_forward_kernel" - 1: 0%....50%....100% - 73 passes
+Running test case 2
+B = 2 M = 3 C = 3 H = 301 W = 301 K = 3 S = 2
+==PROF== Profiling "conv_forward_kernel" - 2: 0%....50%....100% - 73 passes
+Running test case 3
+B = 3 M = 3 C = 3 H = 196 W = 196 K = 3 S = 3
+==PROF== Profiling "conv_forward_kernel" - 3: 0%....50%....100% - 73 passes
+Running test case 4
+B = 4 M = 3 C = 3 H = 239 W = 239 K = 3 S = 4
+==PROF== Profiling "conv_forward_kernel" - 4: 0%....50%....100% - 73 passes
+All test cases passed
+Test batch size: 5000
+Loading fashion-mnist data...Done
+Loading model...Done
+Conv-GPU==
+==PROF== Profiling "prefn_marker_kernel()" - 5: 0%....50%....100% - 73 passes
+==PROF== Profiling "conv_forward_kernel" - 6: 0%....50%....100% - 74 passes
+==PROF== Profiling "do_not_remove_this_kernel()" - 7: 0%....50%....100% - 73 passes
+Layer Time: 8235.68 ms
+Op Time: 7885.25 ms
+Conv-GPU==
+==PROF== Profiling "prefn_marker_kernel()" - 8: 0%....50%....100% - 73 passes
+==PROF== Profiling "conv_forward_kernel" - 9: 0%....50%....100% - 74 passes
+==PROF== Profiling "do_not_remove_this_kernel()" - 10: 0%....50%....100% - 73 passes
+Layer Time: 16894.1 ms
+Op Time: 16645.5 ms
+
+Test Accuracy: 0.871
+
+==PROF== Disconnected from process 557
+==PROF== Report: /build/analysis_file.ncu-rep
+✱ The build folder has been uploaded to http://s3.amazonaws.com/files.rai-project.com/userdata/build-656a15fc702242021be52090.tar.gz. The data will be present for only a short duration of time.

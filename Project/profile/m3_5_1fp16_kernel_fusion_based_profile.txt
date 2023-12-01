@@ -1,0 +1,234 @@
+Nsys:
+**** collection configuration ****
+        force-overwrite = false
+        stop-on-exit = true
+        export_sqlite = true
+        stats = true
+        capture-range = none
+        stop-on-range-end = false
+        Beta: ftrace events:
+        ftrace-keep-user-config = false
+        trace-GPU-context-switch = false
+        delay = 0 seconds
+        duration = 0 seconds
+        kill = signal number 15
+        inherit-environment = true
+        show-output = true
+        trace-fork-before-exec = false
+        sample_cpu = true
+        backtrace_method = LBR
+        wait = all
+        trace_cublas = false
+        trace_cuda = true
+        trace_cudnn = false
+        trace_nvtx = true
+        trace_mpi = false
+        trace_openacc = false
+        trace_vulkan = false
+        trace_opengl = true
+        trace_osrt = true
+        osrt-threshold = 0 nanoseconds
+        cudabacktrace = false
+        cudabacktrace-threshold = 0 nanoseconds
+        profile_processes = tree
+        application command = ./m3
+        application arguments =
+        application working directory = /build
+        NVTX profiler range trigger =
+        NVTX profiler domain trigger =
+        environment variables:
+        Collecting data...
+Running test case 1
+B = 1 M = 3 C = 3 H = 224 W = 224 K = 3 S = 1
+Running test case 2
+B = 2 M = 3 C = 3 H = 301 W = 301 K = 3 S = 2
+Running test case 3
+B = 3 M = 3 C = 3 H = 196 W = 196 K = 3 S = 3
+Running test case 4
+B = 4 M = 3 C = 3 H = 239 W = 239 K = 3 S = 4
+All test cases passed
+Test batch size: 5000
+Loading fashion-mnist data...Done
+Loading model...Done
+Conv-GPU==
+Layer Time: 340.508 ms
+Op Time: 29.8382 ms
+Conv-GPU==
+Layer Time: 257.822 ms
+Op Time: 34.6583 ms
+
+Test Accuracy: 0.8712
+
+        Generating the /build/report1.qdstrm file.
+        Capturing raw events...
+        334952 total events collected.
+        Capturing symbol files...
+        Saving diagnostics...
+        Saving qdstrm file to disk...
+        Finished saving file.
+
+
+Importing the qdstrm file using /opt/nvidia/nsight-systems/2019.5.2/host-linux-x64/QdstrmImporter.
+
+Importing...
+
+Importing [==================================================100%]
+Saving report to file "/build/report1.qdrep"
+Report file saved.
+Please discard the qdstrm file and use the qdrep file instead.
+
+Removed /build/report1.qdstrm as it was successfully imported.
+Please use the qdrep file instead.
+
+Exporting the qdrep file to SQLite database using /opt/nvidia/nsight-systems/2019.5.2/host-linux-x64/nsys-exporter.
+
+Exporting 334884 events:
+
+0%   10   20   30   40   50   60   70   80   90   100%
+|----|----|----|----|----|----|----|----|----|----|
+***************************************************
+
+Exported successfully to
+/build/report1.sqlite
+
+Generating CUDA API Statistics...
+CUDA API Statistics (nanoseconds)
+
+Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   66.3       540910081          20      27045504.1           35215       284711877  cudaMemcpy
+   23.1       188765375          38       4967509.9            1958       184254643  cudaMalloc
+    7.7        62513592          28       2232628.3             777        32351672  cudaDeviceSynchronize
+    2.5        20022346          28        715083.8            4542        19645238  cudaLaunchKernel
+    0.5         4024324          38        105903.3            2072          833880  cudaFree
+    0.0           76432           6         12738.7           11913           14060  cudaMemcpyToSymbol
+
+
+
+
+Generating CUDA Kernel Statistics...
+
+Generating CUDA Memory Operation Statistics...
+CUDA Kernel Statistics (nanoseconds)
+
+Time(%)      Total Time   Instances         Average         Minimum         Maximum  Name
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   95.1        59418669           6       9903111.5            9408        32345808  conv_forward_kernel
+    3.7         2320557           6        386759.5            1568         1341845  convertFP16toFP32
+    1.2          721050          12         60087.5            1248          371037  convertFP32toFP16
+    0.0            2880           2          1440.0            1344            1536  do_not_remove_this_kernel
+    0.0            2496           2          1248.0            1216            1280  prefn_marker_kernel
+
+
+CUDA Memory Operation Statistics (nanoseconds)
+
+Time(%)      Total Time  Operations         Average         Minimum         Maximum  Name
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   91.3       483848833           6      80641472.2           23519       284010193  [CUDA memcpy DtoH]
+    8.7        45890176          14       3277869.7            1120        23990679  [CUDA memcpy HtoD]
+    0.0            9600           6          1600.0            1184            2208  [CUDA memcpy DtoD]
+
+
+CUDA Memory Operation Statistics (KiB)
+
+            Total      Operations            Average            Minimum            Maximum  Name
+-----------------  --------------  -----------------  -----------------  -----------------  --------------------------------------------------------------------------------
+         862672.0               6           143778.7            148.535           500000.0  [CUDA memcpy DtoH]
+         276206.0              14            19729.0              0.004           144453.0  [CUDA memcpy HtoD]
+              7.0               6                1.2              0.158                6.0  [CUDA memcpy DtoD]
+
+
+
+
+Generating Operating System Runtime API Statistics...
+Operating System Runtime API Statistics (nanoseconds)
+
+Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   33.3     51896586101         534      97184618.2           26880       100440761  sem_timedwait
+   33.3     51794894098         532      97358823.5           39551       100534941  poll
+   22.2     34509813777          69     500142228.7       500081059       500407098  pthread_cond_timedwait
+   11.1     17342939155           2    8671469577.5      4479985298     12862953857  pthread_cond_wait
+    0.1        99404028         970        102478.4            1001        16490129  ioctl
+    0.0        20207355        9427          2143.6            1082           46035  read
+    0.0         2895138         102         28383.7            1196         1082543  mmap
+    0.0         1076304         101         10656.5            4106           25359  open64
+    0.0          327021          19         17211.6            3234           48431  fopen64
+    0.0          298780           5         59756.0           38672           74474  pthread_create
+    0.0          148520           3         49506.7           45705           54890  fgets
+    0.0          119246          29          4111.9            1146           15358  munmap
+    0.0          104528          26          4020.3            1184           36325  fopen
+    0.0           91027          15          6068.5            3552            9788  fflush
+    0.0           82348          26          3167.2            1060            9007  fclose
+    0.0           65513          15          4367.5            2208            7980  write
+    0.0           28649           5          5729.8            3392            7591  open
+    0.0           24110           1         24110.0           24110           24110  pipe2
+    0.0           18923           2          9461.5            5544           13379  socket
+    0.0            8304           2          4152.0            4009            4295  pthread_cond_signal
+    0.0            7186           3          2395.3            1039            4717  fwrite
+    0.0            6972           1          6972.0            6972            6972  connect
+    0.0            3931           3          1310.3            1050            1630  fcntl
+    0.0            2152           1          2152.0            2152            2152  bind
+    0.0            1043           1          1043.0            1043            1043  listen
+
+
+
+
+Generating NVTX Push-Pop Range Statistics...
+NVTX Push-Pop Range Statistics (nanoseconds)
+✱ The build folder has been uploaded to http://s3.amazonaws.com/files.rai-project.com/userdata/build-656a0f1670224201ccdd5084.tar.gz. The data will be present for only a short duration of time.
+
+Nv-nsight-cu-cli:
+Running test case 1
+B = 1 M = 3 C = 3 H = 224 W = 224 K = 3 S = 1
+==PROF== Connected to process 557 (/build/m3)
+==PROF== Profiling "convertFP32toFP16" - 1: 0%....50%....100% - 73 passes
+==PROF== Profiling "convertFP32toFP16" - 2: 0%....50%....100% - 73 passes
+==PROF== Profiling "conv_forward_kernel" - 3: 0%....50%....100% - 74 passes
+==PROF== Profiling "convertFP16toFP32" - 4: 0%....50%....100% - 73 passes
+Running test case 2
+B = 2 M = 3 C = 3 H = 301 W = 301 K = 3 S = 2
+==PROF== Profiling "convertFP32toFP16" - 5: 0%....50%....100% - 73 passes
+==PROF== Profiling "convertFP32toFP16" - 6: 0%....50%....100% - 73 passes
+==PROF== Profiling "conv_forward_kernel" - 7: 0%....50%....100% - 73 passes
+==PROF== Profiling "convertFP16toFP32" - 8: 0%....50%....100% - 73 passes
+Running test case 3
+B = 3 M = 3 C = 3 H = 196 W = 196 K = 3 S = 3
+==PROF== Profiling "convertFP32toFP16" - 9: 0%....50%....100% - 73 passes
+==PROF== Profiling "convertFP32toFP16" - 10: 0%....50%....100% - 73 passes
+==PROF== Profiling "conv_forward_kernel" - 11: 0%....50%....100% - 73 passes
+==PROF== Profiling "convertFP16toFP32" - 12: 0%....50%....100% - 73 passes
+Running test case 4
+B = 4 M = 3 C = 3 H = 239 W = 239 K = 3 S = 4
+==PROF== Profiling "convertFP32toFP16" - 13: 0%....50%....100% - 73 passes
+==PROF== Profiling "convertFP32toFP16" - 14: 0%....50%....100% - 73 passes
+==PROF== Profiling "conv_forward_kernel" - 15: 0%....50%....100% - 73 passes
+==PROF== Profiling "convertFP16toFP32" - 16: 0%....50%....100% - 73 passes
+All test cases passed
+Test batch size: 5000
+Loading fashion-mnist data...Done
+Loading model...Done
+Conv-GPU==
+==PROF== Profiling "prefn_marker_kernel()" - 17: 0%....50%....100% - 73 passes
+==PROF== Profiling "convertFP32toFP16" - 18: 0%....50%....100% - 74 passes
+==PROF== Profiling "convertFP32toFP16" - 19: 0%....50%....100% - 73 passes
+==PROF== Profiling "conv_forward_kernel" - 20: 0%....50%....100% - 74 passes
+==PROF== Profiling "convertFP16toFP32" - 21: 0%....50%....100% - 74 passes
+==PROF== Profiling "do_not_remove_this_kernel()" - 22: 0%....50%....100% - 73 passes
+Layer Time: 20679.2 ms
+Op Time: 20379.1 ms
+Conv-GPU==
+==PROF== Profiling "prefn_marker_kernel()" - 23: 0%....50%....100% - 73 passes
+==PROF== Profiling "convertFP32toFP16" - 24: 0%....50%....100% - 74 passes
+==PROF== Profiling "convertFP32toFP16" - 25: 0%....50%....100% - 73 passes
+==PROF== Profiling "conv_forward_kernel" - 26: 0%....50%....100% - 74 passes
+==PROF== Profiling "convertFP16toFP32" - 27: 0%....50%....100% - 74 passes
+==PROF== Profiling "do_not_remove_this_kernel()" - 28: 0%....50%....100% - 73 passes
+Layer Time: 21761.8 ms
+Op Time: 21529.1 ms
+
+Test Accuracy: 0.8712
+
+==PROF== Disconnected from process 557
+==PROF== Report: /build/analysis_file.ncu-rep
+✱ The build folder has been uploaded to http://s3.amazonaws.com/files.rai-project.com/userdata/build-656a0d7470224201b55c6495.tar.gz. The data will be present for only a short duration of time.
